@@ -44,7 +44,7 @@ Import the template and render it with data (optional) :
 import template from './template.twig'
 
 const data = { foo: 'bar' }
-console.log(template.render(data))  // <div>bar</div>
+console.log(template.render(data)) // <div>bar</div>
 ```
 
 ## Options
