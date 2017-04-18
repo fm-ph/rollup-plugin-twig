@@ -28,7 +28,7 @@ function TwigPlugin (options) {
 
     const tokens = JSON.stringify(template.tokens)
 
-    return `twig({ data: ${tokens}, precompiled: true, allowInlineIncludes: true })`
+    return `twig.twig({ data: ${tokens}, precompiled: true, allowInlineIncludes: true })`
   }
 
   return {
@@ -36,7 +36,7 @@ function TwigPlugin (options) {
     transform (code, id) {
       if (filter(id) && ~extensions.indexOf(extname(id).toLowerCase())) {
         return {
-          code: `const { twig } = require('twig')
+          code: `import twig from 'twig'
                  export default ${compile(code)}`,
           map: { mappings: '' }
         }
