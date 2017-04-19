@@ -5,8 +5,11 @@
   "main": "lib/rollup-plugin-twig.cjs.js",
   "module": "lib/rollup-plugin-twig.es.js",
   "jsnext:main": "lib/rollup-plugin-twig.es.js",
+  "noDependency": "lib/rollup-plugin-twig.noDependency.js",
   "scripts": {
-    "build": "rollup -c",
+    "build": "npm run build:dependency && npm run build:noDependency",
+    "build:dependency": "rollup -c --environment INCLUDE_DEPS:true",
+    "build:noDependency": "rollup -c --environment INCLUDE_DEPS:false",
     "build:watch": "rollup -cw",
     "pretest": "npm run build",
     "test": "mocha test",
@@ -40,6 +43,7 @@
     "nyc": "^10.1.2",
     "rollup": "^0.41.4",
     "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-replace": "^1.1.1",
     "rollup-watch": "^3.2.2",
     "semantic-release": "^6.3.2"
   },
@@ -51,7 +55,8 @@
   "standard": {
     "globals": [
       "describe",
-      "it"
+      "it",
+      "INCLUDE_DEPS"
     ]
   }
 }

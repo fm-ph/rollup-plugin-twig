@@ -28,17 +28,24 @@ function TwigPlugin (options) {
 
     const tokens = JSON.stringify(template.tokens)
 
-    return `twig.twig({ data: ${tokens}, precompiled: true, allowInlineIncludes: true })`
+    return `Twig.twig({ data: ${tokens}, precompiled: true, allowInlineIncludes: true })`
   }
 
   return {
     name: 'rollup-plugin-twig',
     transform (code, id) {
       if (filter(id) && ~extensions.indexOf(extname(id).toLowerCase())) {
-        return {
-          code: `import twig from 'twig'
+        if (INCLUDE_DEPS) {
+          return {
+            code: `import Twig from 'twig'
                  export default ${compile(code)}`,
-          map: { mappings: '' }
+            map: { mappings: '' }
+          }
+        } else {
+          return {
+            code: `export default ${compile(code)}`,
+            map: { mappings: '' }
+          }
         }
       }
 
